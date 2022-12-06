@@ -1,0 +1,11 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: rocketmq-demo
+
+rocketmq:
+  nameServer: 192.168.3.57:9876
+  producer:
+    group: docker-group

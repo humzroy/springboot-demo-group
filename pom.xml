@@ -8,16 +8,104 @@
     <artifactId>springboot-demo-group</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
+
+    <name>${project.artifactId}</name>
+
     <modules>
         <module>boot-docker-demo</module>
+        <module>boot-rocketmq-demo</module>
+        <module>boot-easypoi-demo</module>
     </modules>
 
     <properties>
         <spring-boot.version>2.6.3</spring-boot.version>
         <java.version>1.8</java.version>
+        <github.humzroy.framework.version>1.0-SNAPSHOT</github.humzroy.framework.version>
+
+        <!--docker相关配置-->
+        <docker.plugin.version>0.32.0</docker.plugin.version>
+        <docker.host>http://192.168.0.100:2375</docker.host>
+        <docker.registry>192.168.0.100</docker.registry>
+        <docker.namespace>pig4cloud</docker.namespace>
+        <docker.username>username</docker.username>
+        <docker.password>password</docker.password>
+
+
     </properties>
 
+    <dependencyManagement>
+        <!-- spring boot 依赖 -->
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <build>
+        <finalName>${project.name}</finalName>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+
+        <!--插件管理-->
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${spring-boot.version}</version>
+                    <configuration>
+                        <finalName>${project.build.finalName}</finalName>
+                        <layers>
+                            <enabled>true</enabled>
+                        </layers>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>repackage</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <!--<plugin>-->
+                <!--    <groupId>io.fabric8</groupId>-->
+                <!--    <artifactId>docker-maven-plugin</artifactId>-->
+                <!--    <version>${docker.plugin.version}</version>-->
+                <!--    <configuration>-->
+                <!--        &lt;!&ndash; Docker Remote Api&ndash;&gt;-->
+                <!--        <dockerHost>${docker.host}</dockerHost>-->
+                <!--        &lt;!&ndash; Docker 镜像私服&ndash;&gt;-->
+                <!--        <registry>${docker.registry}</registry>-->
+                <!--        &lt;!&ndash; 认证信息&ndash;&gt;-->
+                <!--        <authConfig>-->
+                <!--            <push>-->
+                <!--                <username>${docker.username}</username>-->
+                <!--                <password>${docker.password}</password>-->
+                <!--            </push>-->
+                <!--        </authConfig>-->
+                <!--        <images>-->
+                <!--            <image>-->
+                <!--                &lt;!&ndash; 镜像名称： 172.17.0.111/library/pig-gateway:2.6.3&ndash;&gt;-->
+                <!--                <name>${docker.registry}/${docker.namespace}/${project.name}:${project.version}</name>-->
+                <!--                <build>-->
+                <!--                    <dockerFile>${project.basedir}/Dockerfile</dockerFile>-->
+                <!--                </build>-->
+                <!--            </image>-->
+                <!--        </images>-->
+                <!--    </configuration>-->
+                <!--</plugin>-->
+            </plugins>
+        </pluginManagement>
         <plugins>
             <!-- 打包时跳过测试 -->
             <plugin>
