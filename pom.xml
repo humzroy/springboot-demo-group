@@ -15,6 +15,7 @@
         <module>boot-docker-demo</module>
         <module>boot-rocketmq-demo</module>
         <module>boot-easypoi-demo</module>
+        <module>boot-common-demo</module>
     </modules>
 
     <properties>
