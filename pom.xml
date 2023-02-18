@@ -16,6 +16,7 @@
         <module>boot-rocketmq-demo</module>
         <module>boot-easypoi-demo</module>
         <module>boot-common-demo</module>
+        <module>boot-mybatis-demo</module>
     </modules>
 
     <properties>

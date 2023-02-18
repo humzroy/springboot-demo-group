@@ -1,0 +1,237 @@
+###################### server 配置 ######################
+server:
+  port: 8082
+  # undertow 配置
+  undertow:
+    # HTTP post内容的最大大小。当值为-1时，默认值为大小是无限的
+    max-http-post-size: -1
+    # 以下的配置会影响buffer,这些buffer会用于服务器连接的IO操作,有点类似netty的池化内存管理
+    # 每块buffer的空间大小,越小的空间被利用越充分
+    buffer-size: 512
+    # 是否分配的直接内存
+    direct-buffers: true
+    threads:
+      # 设置IO线程数, 它主要执行非阻塞的任务,它们会负责多个连接, 默认设置每个CPU核心一个线程
+      io: 8
+      # 阻塞任务线程池, 当执行类似servlet请求阻塞操作, undertow会从这个线程池中取得线程,它的值设置取决于系统的负载
+      worker: 256
+###################### spring 配置 ######################
+spring:
+  application:
+    name: mybatis-demo
+  profiles:
+    active: dev
+  task:
+    execution:
+      pool:
+        core-size: 10
+        max-size: 20
+        keep-alive: 60s
+        queue-capacity: 50
+        allow-core-thread-timeout: true
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  servlet:
+    multipart:
+      # 整个请求大小限制
+      max-request-size: 100MB
+      # 上传单个文件大小限制
+      max-file-size: 100MB
+  #jackson配置
+  jackson:
+    # 日期格式化
+    date-format: yyyy-MM-dd HH:mm:ss
+    serialization:
+      # 格式化输出
+      INDENT_OUTPUT: false
+      # 忽略无法转换的对象
+      fail_on_empty_beans: false
+    deserialization:
+      # 允许对象忽略json中不存在的属性
+      fail_on_unknown_properties: false
+###################### 框架 配置 ######################
+yizhen:
+  mybatis:
+    sql: true #是否开启sql打印
+    slowSqlMillis: 10000 #慢sql限值 毫秒，默认10ms
+    ignoreKeywords: #忽略关键字（根据关键字忽略sql打印)
+#      - insert
+  #任务调度配置
+  task:
+    enable: false
+##yizhen-mybatis封装版本 数据源配置 3.4.1
+#  datasource:
+#    url: jdbc:mysql://192.168.3.57:3306/test?useUnicode=true&characterEncoding=utf-8&useSSL=false&allowMultiQueries=true&serverTimezone=Asia/Shanghai&rewriteBatchedStatements=true
+#    username: root
+#    password: root
+#    driverClassName: com.mysql.cj.jdbc.Driver
+##打开mybatis 日志
+#mybatis-plus:
+#  configuration:
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+
+
+logging:
+  level:
+    #关掉sql日志拦截
+    com.github.yizhen.framework.datasource.interceptor.mybatis: off
+    com.github.yizhen.framework.mybatis.interceptor: off
+############################# 动态数据源 mybatisplus Druid 配置 #############################
+---
+spring:
+  datasource:
+    dynamic:
+      primary: master #设置默认的数据源或者数据源组,默认值即为master
+      strict: false #严格匹配数据源,默认false. true未匹配到指定数据源时抛异常,false使用默认数据源
+      datasource:
+        master:
+          url: jdbc:mysql://192.168.3.57:3306/test?useUnicode=true&characterEncoding=utf-8&useSSL=false&allowMultiQueries=true&serverTimezone=Asia/Shanghai&rewriteBatchedStatements=true
+          username: root
+          password: root
+          driver-class-name: com.mysql.jdbc.Driver # 3.2.0开始支持SPI可省略此配置
+        slave_1:
+          url: jdbc:mysql://192.168.3.57:3306/test?useUnicode=true&characterEncoding=utf-8&useSSL=false&allowMultiQueries=true&serverTimezone=Asia/Shanghai&rewriteBatchedStatements=true
+          username: root
+          password: root
+          driver-class-name: com.mysql.jdbc.Driver
+        #        slave_2:
+        #          url: ENC(xxxxx) # 内置加密,使用请查看详细文档
+        #          username: ENC(xxxxx)
+        #          password: ENC(xxxxx)
+        #          driver-class-name: com.mysql.jdbc.Driver
+        #......省略
+        #以上会配置一个默认库master，一个组slave下有两个子库slave_1,slave_2
+---
+
+# MyBatisPlus配置
+# https://baomidou.com/config/
+mybatis-plus:
+  #启动时是否检查MyBatis XML文件的存在，默认不检查
+  check-config-location: false
+  #扫描mapper文件的位置
+  mapper-locations: classpath:/mybatis/**/*Mapper.xml
+  # 实体扫描，多个package用逗号或者分号分隔
+  #typeAliasesPackage: com.github.yizhen.**.entity.**
+  configuration:
+    #是否开启缓存
+    cache-enabled: false
+    # NONE：不启用 PARTIAL：只对非嵌套 resultMap 自动映射 FULL：对所有 resultMap 自动映射
+    autoMappingBehavior: PARTIAL
+    # NONE：不做处理 WARNING：打印相关警告 FAILING：抛出异常和详细信息
+    autoMappingUnknownColumnBehavior: NONE
+    #配置返回数据库(column下划线命名&&返回java实体是驼峰命名)，自动匹配无需as（没开启这个，SQL需要写as： select user_id as userId）
+    map-underscore-to-camel-case: true
+    # 更详细的日志输出 会有性能损耗 org.apache.ibatis.logging.stdout.StdOutImpl
+    # 关闭日志记录 (可单纯使用 p6spy 分析) org.apache.ibatis.logging.nologging.NoLoggingImpl
+    # 默认日志输出 org.apache.ibatis.logging.slf4j.Slf4jImpl
+    # 默认日志输出 org.apache.ibatis.logging.slf4j.Slf4jImpl
+    logImpl: org.apache.ibatis.logging.stdout.StdOutImpl
+    #数据库厂商标识
+    database-id: mysql
+  #如果插件版本是3.0-gamma这个选项必须配置,否则会nullPoint
+  global-config:
+    #关闭MP3.0自带的banner
+    banner: false
+    db-config:
+      #数据库类型(已弃用3.1.1，这个属性没什么用)
+      #db-type: mysql
+      #主键类型  AUTO："数据库ID自增"，INPUT："用户输入ID"，ID_WORKER："全局唯一ID (数字类型唯一ID)"，UUID:"全局唯一ID UUID"
+      id-type: auto
+      #字段策略 IGNORED："忽略判断"，NOT_NULL："非 NULL 判断"，NOT_EMPTY："非空判断"(已弃用3.1.2)
+      #field-strategy: not-empty
+      #数据库大写下划线转换
+      capital-mode: false
+      #表名，是否使用下划线命名，默认数据库表使用下划线命名
+      table-underline: true
+      #逻辑删除配置
+      #逻辑删除全局值（1表示已删除，这也是Mybatis Plus的默认配置）
+      logic-delete-value: 1
+      #逻辑未删除全局值（0表示未删除，这也是Mybatis Plus的默认配置）
+      logic-not-delete-value: 0
+      insertStrategy: NOT_NULL
+      updateStrategy: NOT_NULL
+      where-strategy: NOT_NULL
+
+---
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    # 动态数据源文档 https://www.kancloud.cn/tracy5546/dynamic-datasource/content
+    dynamic:
+      druid:
+        #初始化来连接大小
+        initial-size: 5
+        #连接池中最小的空闲连接数
+        min-idle: 5
+        #连接池中使用的最大连接数量
+        max-active: 100
+        #获取连接的最大等待时间，单位毫秒
+        max-wait: 60000
+        #间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+        time-between-eviction-runs-millis: 60000
+        #一个连接在池中最小生存的时间，单位是毫秒
+        min-evictable-idle-time-millis: 300000
+        #用来检测连接是否有效的sql，要求是一个查询语句
+        validation-query: SELECT 1 FROM DUAL
+        #建议配置为true，不影响性能，并且保证安全性。 申请连接的时候检测，如果空闲时间大于timeBetweenEvictionRunsMillis，执行validationQuery检测连接是否有效
+        test-while-idle: true
+        #申请连接时执行validationQuery检测连接是否有效，做了这个配置会降低性能
+        test-on-borrow: false
+        #归还连接时执行validationQuery检测连接是否有效，做了这个配置会降低性能
+        test-on-return: false
+        #标记是否删除泄露的连接
+        #remove-abandoned: true
+        #泄露的连接可以被删除的超时时间（秒），该值应设置为应用程序查询可能执行的最长时间，1800秒，也就是30分钟
+        remove-abandoned-timeout-millis: 1800
+        #删除泄露的连接时是否输出错误日志
+        log-abandoned: true
+        #打开PSCache，并且指定每个连接上PSCache的大小，PSCache对支持游标的数据库性能提升巨大，比如说oracle
+        pool-prepared-statements: true
+        #要启用PSCache，必须配置大于0，当大于0时，poolPreparedStatements自动触发修改为true
+        max-pool-prepared-statement-per-connection-size: 20
+        #慢SQL记录
+        stat:
+          log-slow-sql: true
+          slow-sql-millis: 5000
+          merge-sql: true
+        #合并多个DruidDataSource的监控数据
+        use-global-data-source-stat: true
+      # 开启seata
+      seata: false
+      seata-mode: AT
+    druid:
+      #web监控
+      web-stat-filter:
+        enabled: true
+        url-pattern: '/*'
+        exclusions: '*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*'
+        session-stat-enable: true
+        profile-enable: true
+      stat-view-servlet:
+        enabled: true
+        login-username: admin
+        login-password: admin
+        reset-enable: true
+        #允许所有访问
+        allow:
+      #监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+      filter:
+        wall:
+          enabled: true
+        config:
+          enabled: true
+        encoding:
+          enabled: true
+        stat:
+          enabled: true
+          # 慢SQL记录
+          log-slow-sql: true
+          slow-sql-millis: 5000
+          merge-sql: true
+        commons-log:
+          enabled: true
+        slf4j:
+          enabled: true
+
