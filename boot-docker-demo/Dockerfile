@@ -1,7 +1,7 @@
 # 指定基础镜像  
 FROM williamyeh/java8
 # 指定作者名和E-mail  
-MAINTAINER humzroy "aaron_sunny@163.com"
+MAINTAINER yizhen "aaron_sunny@163.com"
   
 #指定挂载点  
 VOLUME /tmp  

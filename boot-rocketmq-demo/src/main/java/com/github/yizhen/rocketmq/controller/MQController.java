@@ -1,9 +1,9 @@
-package com.github.humzroy.rocketmq.controller;
+package com.github.yizhen.rocketmq.controller;
 
-import com.github.humzroy.framework.rocketmq.dto.MessageRequest;
-import com.github.humzroy.framework.rocketmq.dto.RocketMQDelayLevelMapping;
-import com.github.humzroy.framework.rocketmq.dto.RocketMQDelayTimeMapping;
-import com.github.humzroy.framework.rocketmq.helper.RocketMQHelper;
+import com.github.yizhen.framework.rocketmq.dto.MessageRequest;
+import com.github.yizhen.framework.rocketmq.dto.RocketMQDelayLevelMapping;
+import com.github.yizhen.framework.rocketmq.dto.RocketMQDelayTimeMapping;
+import com.github.yizhen.framework.rocketmq.helper.RocketMQHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.client.producer.SendResult;
 import org.springframework.beans.factory.annotation.Autowired;

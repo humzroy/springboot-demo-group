@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.github.humzroy</groupId>
+    <groupId>com.github.yizhen</groupId>
     <artifactId>springboot-demo-group</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
@@ -21,7 +21,7 @@
     <properties>
         <spring-boot.version>2.6.3</spring-boot.version>
         <java.version>1.8</java.version>
-        <github.humzroy.framework.version>1.0-SNAPSHOT</github.humzroy.framework.version>
+        <github.yizhen.framework.version>1.0-SNAPSHOT</github.yizhen.framework.version>
 
         <!--docker相关配置-->
         <docker.plugin.version>0.32.0</docker.plugin.version>

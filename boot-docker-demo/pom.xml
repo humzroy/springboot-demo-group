@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.github.humzroy</groupId>
+        <groupId>com.github.yizhen</groupId>
         <artifactId>springboot-demo-group</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
@@ -16,14 +16,14 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.github.humzroy.framework</groupId>
-            <artifactId>humzroy-core</artifactId>
-            <version>${github.humzroy.framework.version}</version>
+            <groupId>com.github.yizhen.framework</groupId>
+            <artifactId>yizhen-core</artifactId>
+            <version>${github.yizhen.framework.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.github.humzroy.framework</groupId>
-            <artifactId>humzroy-starter-web</artifactId>
-            <version>${github.humzroy.framework.version}</version>
+            <groupId>com.github.yizhen.framework</groupId>
+            <artifactId>yizhen-starter-web</artifactId>
+            <version>${github.yizhen.framework.version}</version>
         </dependency>
     </dependencies>
 

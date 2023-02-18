@@ -1,8 +1,7 @@
-package com.github.humzroy.rocketmq;
+package com.github.yizhen.rocketmq;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
 
 /**
  * 入口
@@ -11,7 +10,7 @@ import org.springframework.context.annotation.ComponentScan;
  * @date 2022/12/04 15:29
  **/
 
-//@ComponentScan(basePackages = "com.github.humzroy.**")
+//@ComponentScan(basePackages = "com.github.yizhen.**")
 @SpringBootApplication
 public class MQApplication {
 

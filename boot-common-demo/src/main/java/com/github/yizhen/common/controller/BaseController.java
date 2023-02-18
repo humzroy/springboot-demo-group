@@ -1,9 +1,9 @@
-package com.github.humzroy.common.controller;
+package com.github.yizhen.common.controller;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.github.humzroy.framework.core.api.ApiResult;
-import com.github.humzroy.framework.core.api.TypeReferenceApiResult;
-import com.github.humzroy.framework.core.util.JacksonUtil;
+import com.github.yizhen.framework.core.api.ApiResult;
+import com.github.yizhen.framework.core.api.TypeReferenceApiResult;
+import com.github.yizhen.framework.core.util.JacksonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author humzroy
+ * @author yizhen
  * @date 2022/12/10 10:07
  **/
 @RestController

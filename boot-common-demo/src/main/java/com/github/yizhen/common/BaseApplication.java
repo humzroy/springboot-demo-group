@@ -1,16 +1,19 @@
-package com.github.humzroy.esaypoi;
+package com.github.yizhen.common;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * @author humzroy
- * @date 2022/12/06 23:14
+ * @author yizhen
+ * @date 2022/12/10 10:07
  **/
+
 @SpringBootApplication
-public class PoiApplication {
+public class BaseApplication {
+
 
     public static void main(String[] args) {
-        SpringApplication.run(PoiApplication.class, args);
+
+        SpringApplication.run(BaseApplication.class, args);
     }
 }

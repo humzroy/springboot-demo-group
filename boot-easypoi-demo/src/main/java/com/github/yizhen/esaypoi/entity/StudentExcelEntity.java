@@ -1,4 +1,4 @@
-package com.github.humzroy.esaypoi.entity;
+package com.github.yizhen.esaypoi.entity;
 
 import cn.afterturn.easypoi.excel.annotation.Excel;
 import lombok.Data;
