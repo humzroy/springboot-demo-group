@@ -17,6 +17,7 @@
         <module>boot-easypoi-demo</module>
         <module>boot-common-demo</module>
         <module>boot-mybatis-demo</module>
+        <module>boot-feign-demo</module>
     </modules>
 
     <properties>
