@@ -1,6 +1,7 @@
 package com.github.yizhen.demo.feign.client;
 
 import com.github.yizhen.framework.core.api.ApiResult;
+import feign.Headers;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -9,11 +10,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 public interface FeignBClient {
 
 
-    @PostMapping("api/b/demo-b")
+    @PostMapping(value = "api/b/demo-b")
     ApiResult<String> demoB(@RequestBody String json);
 
 
-    @PostMapping("api/b/demo-b-async")
+    @PostMapping(value = "api/b/demo-b-async")
+        //, headers = {"AUTHENTICATION_TYPE=NO_AUTHENTICATION", "FEIGN_SOURCE=A}"}
     ApiResult<String> demoBAsync(@RequestBody String json);
 
 }

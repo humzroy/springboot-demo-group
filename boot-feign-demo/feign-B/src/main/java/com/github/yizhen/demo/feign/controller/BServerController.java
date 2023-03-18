@@ -5,6 +5,7 @@ import cn.hutool.core.util.ObjectUtil;
 import com.github.yizhen.demo.feign.client.FeignCClient;
 import com.github.yizhen.framework.core.api.ApiResult;
 import com.github.yizhen.framework.core.constant.BaseConstant;
+import com.github.yizhen.framework.core.util.AsyncUtil;
 import com.github.yizhen.framework.core.util.FeignResponseUtil;
 import com.github.yizhen.framework.core.util.ServletUtils;
 import lombok.SneakyThrows;
@@ -47,12 +48,15 @@ public class BServerController {
     public ApiResult<String> demoBAsync(@RequestBody String json) {
         RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
         log.info("requestAttributes is null, {}", ObjectUtil.isNull(requestAttributes));
-        log.info("header:{}", ServletUtils.getRequest().getHeader(BaseConstant.FeignHeader.AUTHENTICATION_TYPE));
+        log.info("header:AUTHENTICATION_TYPE={}", ServletUtils.getRequest().getHeader(BaseConstant.FeignHeader.AUTHENTICATION_TYPE));
+        log.info("header:FEIGN_SOURCE={}", ServletUtils.getRequest().getHeader("FEIGN_SOURCE"));
         RequestContextHolder.setRequestAttributes(requestAttributes);
         log.info("server b , json:{}", json);
         log.info("server b , start request c ....");
         // 异步调用
-        ThreadUtil.execAsync(() -> cClient.demoC(json));
+        AsyncUtil.asyncDeal(() -> cClient.demoC(json));
+
+        // ThreadUtil.execAsync(() -> cClient.demoC(json));
         log.info("server b , end request c ");
         return ApiResult.ok("获取成功", "b-async-succ");
     }

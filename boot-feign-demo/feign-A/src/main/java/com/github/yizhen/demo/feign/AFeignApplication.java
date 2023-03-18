@@ -17,7 +17,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableYiZhenFeignClients
 @EnableDiscoveryClient
 @EnableScheduling
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.github.yizhen")
 public class AFeignApplication {
 
     public static void main(String[] args) {

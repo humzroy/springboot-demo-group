@@ -15,7 +15,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 @Slf4j
 @EnableYiZhenFeignClients
 @EnableDiscoveryClient
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.github.yizhen")
 public class CFeignApplication {
 
     public static void main(String[] args) {
