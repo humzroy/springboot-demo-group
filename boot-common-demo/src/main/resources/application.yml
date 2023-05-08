@@ -1,0 +1,14 @@
+port: 8080
+
+spring:
+  application:
+    name: common-demo
+
+  task:
+    execution:
+      pool:
+        core-size: 10
+        max-size: 20
+        keep-alive: 60s
+        queue-capacity: 50
+        allow-core-thread-timeout: true
