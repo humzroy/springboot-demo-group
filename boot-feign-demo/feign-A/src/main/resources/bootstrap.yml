@@ -75,9 +75,9 @@ yizhen:
 spring:
   cloud:
     nacos:
-      server-addr: localhost:8848 #Nacos 链接地址
+      server-addr: 192.168.3.57:8848 #Nacos 链接地址
       discovery:
-        namespace: 9a1887e1-c245-4399-bbc0-a33930ed52df
+        namespace: e98a9720-1d81-4186-bdad-0c22564ea3b7
         username: nacos
         password: nacos
 

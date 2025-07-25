@@ -26,7 +26,7 @@ public class ServerATask {
     private FeignBClient bClient;
 
 
-    @Scheduled(cron = "*/30 * * * * ?")
+    //@Scheduled(cron = "*/30 * * * * ?")
     public void taskA() {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("name", "tom");

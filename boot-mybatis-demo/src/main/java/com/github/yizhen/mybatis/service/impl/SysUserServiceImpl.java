@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.github.pagehelper.PageHelper;
+import com.github.yizhen.framework.core.util.StringUtils;
 import com.github.yizhen.mybatis.dao.ISysUserMapper;
 import com.github.yizhen.mybatis.entity.SysUser;
 import com.github.yizhen.mybatis.service.ISysUserService;
@@ -14,8 +16,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
-  *  服务实现类
-  *
+ * 服务实现类
+ *
  * @author wuhengzhen
  * @since 2023-02-18
  */
@@ -88,6 +90,44 @@ public class SysUserServiceImpl extends ServiceImpl<ISysUserMapper, SysUser> imp
         // 查询条件
         QueryWrapper<SysUser> queryWrapper = getQueryWrapper(conditions);
         return baseMapper.selectCount(queryWrapper);
+    }
+
+    @Override
+    public Page<SysUser> getPageBySql(SysUser conditions) {
+        Page<SysUser> page = new Page<>(conditions.getPageNo(), conditions.getPageSize());
+        if (StringUtils.isBlank(conditions.getOrder())) {
+            conditions.setOrder("create_time");
+        }
+        if (StringUtils.isBlank(conditions.getSort())) {
+            conditions.setSort("desc");
+        }
+
+        return baseMapper.getPageBySql(page, conditions);
+
+
+    }
+
+    @Override
+    public Page<SysUser> getPageHelperBySql(SysUser conditions) {
+        if (StringUtils.isBlank(conditions.getOrder())) {
+            conditions.setOrder("id");
+        }
+        if (StringUtils.isBlank(conditions.getSort())) {
+            conditions.setSort("desc");
+        }
+        try (com.github.pagehelper.Page<SysUser> pageHelperPage =
+                     PageHelper.startPage(conditions.getPageNo(), conditions.getPageSize(), conditions.getOrder() + " " + conditions.getSort())) {
+
+            // 执行查询，PageHelper 会自动进行分页
+            List<SysUser> list = baseMapper.getPageHelperBySql(conditions);
+
+            // 将 PageHelper 的分页结果转换为 MyBatis-Plus 的 Page 对象
+            Page<SysUser> mybatisPlusPage = new Page<>(conditions.getPageNo(), conditions.getPageSize());
+            mybatisPlusPage.setRecords(list);
+            mybatisPlusPage.setTotal(pageHelperPage.getTotal());
+
+            return mybatisPlusPage;
+        }
     }
 
     /**

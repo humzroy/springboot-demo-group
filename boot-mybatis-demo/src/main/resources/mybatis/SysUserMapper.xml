@@ -36,5 +36,24 @@
             (#{item.name}, #{item.phone}, #{item.createTime})
         </foreach>
     </insert>
+    <select id="getPageBySql" parameterType="com.github.yizhen.mybatis.entity.SysUser" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_user
+        <if test="conditions.name != null and conditions.name !=''">
+            where name like concat('%',#{conditions.name},'%')
+        </if>
+        order by ${conditions.order} ${conditions.sort}
+
+    </select>
+    <select id="getPageHelperBySql" parameterType="com.github.yizhen.mybatis.entity.SysUser" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_user
+        <if test="conditions.name != null and conditions.name !=''">
+            where name like concat('%',#{conditions.name},'%')
+        </if>
+
+    </select>
 
 </mapper>
